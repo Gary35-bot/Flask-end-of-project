@@ -130,6 +130,8 @@ def user_registration():
             mail.send(msg)
         return response
 
+# adding a product in database
+
 
 @app.route('/add-product/', methods=["POST"])
 def market_place():
@@ -146,11 +148,13 @@ def market_place():
             cursor.execute("INSERT INTO market("
                            "product_name,"
                            "description,"
-                           "price) VALUES(?, ?, ?)", (product_name, description, price))
+                           "price) VALUES(?, ?, ?)", (product_name, description, str('R') + price))
             conn.commit()
             response["message"] = "success"
             response["status_code"] = 201
         return response
+
+# route for viewing user in database
 
 
 @app.route('/view-users/', methods=["GET"])
@@ -180,6 +184,8 @@ def get_product():
     response['data'] = posts
     return response
 
+# deleting route
+
 
 @app.route("/delete-product/<int:product_id>")
 @jwt_required()
@@ -192,6 +198,8 @@ def delete_product(product_id):
         response['status_code'] = 200
         response['message'] = "Product deleted successfully "
     return response
+
+# editing the product database below
 
 
 @app.route('/edit-product/<int:id>', methods=["PUT"])
